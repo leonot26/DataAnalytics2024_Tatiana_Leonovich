@@ -1,0 +1,133 @@
+# loading the library and ggplot2
+library()
+install.packages('ggplot2')
+library('ggplot2')
+library('tidyverse')
+
+# exploring data frames
+help("data.frame")
+help("read.csv")
+
+# loading in data frame EPI 2024 csv
+# name of data frame cannot start with numbers
+EPI_2024 <- read.csv("C:/Users/Tat/Desktop/Data Analytics 2024/lab 1/epi2024results06022024.csv")
+# setting the default object
+attach(EPI_2024)
+# simple editor test
+fix(EPI_data)
+
+# prints out values EPI_data$EPI.new
+EPI.new
+
+# filtering for NA values
+tf <- is.na(EPI.new)
+#removing NA values
+EPI.new[!tf]
+# exploring the distribution of EPI.new (column)
+summary(EPI.new)
+fivenum(EPI.new, na.rm = TRUE)
+# stem and leaf plot
+stem(EPI.new)
+#histogram (R)
+hist(EPI.new)
+#modifying the graph
+hist(EPI.new, seq(20., 80., 1.0), prob=TRUE)
+# lines the histogram
+lines(density(EPI.new, na.rm = TRUE, bw = 1.))
+# or bw = "SJ" smooth best fit lines
+lines(density(EPI.new, na.rm = TRUE, bw = "SJ"))
+# adds a rug representation (1-d plot)
+rug(EPI.new)
+help(rug)
+
+#comparing distributions 
+ boxplot(EPI.new, APO.new)
+#this seq() sets the x bounds and increments
+x<-seq(20,80,1)
+q<- dnorm(x,mean=42, sd=5,log=FALSE)
+lines(x,q)
+lines(x,.4*q)
+q<-dnorm(x,mean=65, sd=5,log=FALSE)
+lines(x,.12*q) 
+
+
+# Exercise 2 fitting a distribution beyond histograms
+# cumulative density function
+plot(ecdf(EPI.new), do.points=FALSE, verticals=TRUE) 
+# Quantile- Quantile plot # with line
+qqnorm(EPI.new) ; qqline(EPI.new)
+
+#QQ plot against the generating distribution
+qqplot(rnorm(ppoints(250)), EPI.new, xlab = "Q-Q plot for norm dsn")
+qqline(EPI.new)
+
+qqplot(rt(ppoints(250), df = 5), EPI.new, xlab = "Q-Q plot for t dsn")
+qqline(EPI.new)
+
+help(qqplot)
+help(rnorm)
+
+# Exercise 2a
+ECO.new
+BDH.new
+# ECO.new first
+# removing NA values
+tf2 <- is.na(ECO.new)
+ECO.new[!tf2]
+summary (ECO.new)
+fivenum(ECO.new, na.rm = TRUE)
+stem(EPI.new)
+# histogram, the seq() function x limit was set to 85 to include all data
+hist(ECO.new)
+hist(ECO.new, seq(20, 85, 1), prob=TRUE)
+# plots
+lines(density(ECO.new, na.rm= TRUE, bw = 1.))
+# or bw = "SJ" smooth best fit lines
+lines(density(ECO.new, na.rm = TRUE, bw = "SJ"))
+# adds a rug representation (1-d plot)
+rug(ECO.new)
+
+# cleaning BDH.new
+BDH.new
+tf3 <- is.na(BDH.new)
+BDH.new[!tf3]
+# stats
+summary(BDH.new)
+fivenum(BDH.new, na.rm = TRUE)
+stem(BDH.new)
+#graphs
+hist(BDH.new)
+#change x range
+hist(BDH.new, seq(1,90,1), prob= TRUE)
+lines(density(BDH.new, na.rm = TRUE, bw = "SJ"))
+rug(BDH.new)
+
+#comparing distributions
+boxplot(ECO.new, BDH.new)
+
+#fitting beyond distributions
+#ECO.new first
+# cumulative density function
+plot(ecdf(ECO.new), do.points=FALSE, verticals=TRUE) 
+# Quantile- Quantile plot # with line
+qqnorm(ECO.new) ; qqline(ECO.new)
+
+#QQ plot against the generating distribution
+qqplot(rnorm(ppoints(250)), ECO.new, xlab = "Q-Q plot for norm dsn")
+qqline(ECO.new)
+
+qqplot(rt(ppoints(250), df = 5), ECO.new, xlab = "Q-Q plot for t dsn")
+qqline(ECO.new)
+
+#BDH.new fitting beyond distributions
+# cumulative density function
+plot(ecdf(BDH.new), do.points=FALSE, verticals=TRUE) 
+# Quantile- Quantile plot # with line
+qqnorm(BDH.new) ; qqline(EPI.new)
+
+#QQ plot against the generating distribution
+qqplot(rnorm(ppoints(250)), BDH.new, xlab = "Q-Q plot for norm dsn")
+qqline(BDH.new)
+
+qqplot(rt(ppoints(250), df = 5), BDH.new, xlab = "Q-Q plot for t dsn")
+qqline(BDH.new)
